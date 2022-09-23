@@ -64,6 +64,9 @@ function SignIn() {
             vertical: "top",
             horizontal: "center",
           });
+        } else {
+          alert(res.data.message);
+          setIsloading(false);
         }
       });
   };

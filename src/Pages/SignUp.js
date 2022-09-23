@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import styled from "styled-components/macro";
-import { IconButton } from "@mui/material";
+import { CircularProgress, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 function Signup() {
   const [showPasword, setShowPassword] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -20,7 +21,7 @@ function Signup() {
 
   const onSubmit = async (data) => {
     const { name, email, password } = data;
-
+    setIsloading(true);
     await axios
       .post("https://hiring-stackroots-server.herokuapp.com/auth/signup/user", {
         fullname: name,
@@ -32,6 +33,10 @@ function Signup() {
         if (res.data.isError === false) {
           navigate("/signin");
           alert(res.data.message);
+          setIsloading(false);
+        } else {
+          alert(res.data.message);
+          setIsloading(false);
         }
       });
   };
@@ -121,7 +126,7 @@ function Signup() {
           </InputContainer2>
           {errors.password && <ErrorMsg>{errors.password.message}</ErrorMsg>}
           <StyledButton type="submit" variant="contained">
-            Signup
+            {isLoading ? <StyledLoader color="inherit" /> : "SignUp"}
           </StyledButton>
         </Form>
       </CenterContainer>
@@ -130,6 +135,13 @@ function Signup() {
 }
 
 export default Signup;
+
+const StyledLoader = styled(CircularProgress)`
+  && {
+    width: 25px !important;
+    height: 25px !important;
+  }
+`;
 const IconContainer = styled.div`
   position: absolute;
   right: 5px;

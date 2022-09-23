@@ -4,6 +4,7 @@ import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../Slices/userSlice";
+import axios from "axios";
 function Header() {
   const dispatch = useDispatch();
 

@@ -5,13 +5,16 @@ import {
   BrowserRouter as Router,
   Routes as Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import Header from "./Components/Header";
 import { lazy, Suspense } from "react";
 import { CircularProgress } from "@mui/material";
 import Footer from "./Pages/Footer";
+import { useSelector } from "react-redux";
 
 function App() {
+  const data = useSelector((state) => state.user);
   const Signup = lazy(() => import("../src/Pages/SignUp"));
   const Signin = lazy(() => import("../src/Pages/SignIn"));
   const Home = lazy(() => import("../src/Pages/Home"));
@@ -27,10 +30,19 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/" element={<Home />} />
+            {data.acces && data.isAuth ? (
+              <>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/home" element={<Home />} />
+              </>
+            ) : (
+              <>
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/signin" element={<Signin />} />
+              </>
+            )}
           </Switch>
           <Footer />
         </Router>
