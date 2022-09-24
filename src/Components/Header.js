@@ -10,19 +10,35 @@ function Header() {
 
   const data = useSelector((state) => state.user);
 
-  console.log("ppppppppp", data.access);
+  // console.log("ppppppppp", data.access);
   // console.log("ppppppppp", data.isAuth);
+  // const accesstoken = JSON.parse(data.access);
   const LogoutFn = async () => {
-    await axios
-      .post(
-        "https://hiring-stackroots-server.herokuapp.com/auth/signout/user",
-        {
-          Authorization: `Token ${data.access}`,
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-      });
+    // await axios
+    //   .post(
+    //     "https://hiring-stackroots-server.herokuapp.com/auth/signout/user",
+    //     {
+    //       Headers: {
+    //         Authorization: `Token ${data.access}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     console.log("iiiiiiiiiii", res.data);
+    //   });
+
+    let url =
+      "https://hiring-stackroots-server.herokuapp.com/auth/signout/user";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Token ${data.access}`,
+      },
+    }).then((response) => {
+      let result = response.json();
+      console.log("tttttttttttttt", result);
+    });
 
     // dispatch(logoutSuccess({}));
   };
@@ -37,9 +53,7 @@ function Header() {
           {data.access && data.isAuth ? (
             <>
               <Links to="/home">Home</Links>
-              <Links to="/signin" onClick={LogoutFn}>
-                Logout
-              </Links>
+              <Links onClick={LogoutFn}>Logout</Links>
             </>
           ) : (
             <>

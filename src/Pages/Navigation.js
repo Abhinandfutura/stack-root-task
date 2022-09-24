@@ -1,8 +1,6 @@
-import React, { lazy, useEffect } from "react";
-import { Routes as Switch, Route, useNavigate } from "react-router-dom";
+import React from "react";
+import { Routes as Switch, Route } from "react-router-dom";
 import Home from "./Home";
-import SignIn from "./SignIn";
-import Signup from "./SignUp";
 
 function Navigation() {
   //   const navigate = useNavigate();
@@ -10,10 +8,8 @@ function Navigation() {
   return (
     <div>
       <Switch>
-        <>
-          <Route path="/home" element={<Home />} />
-          {/* <Route path="/" element={<Home />} /> */}
-        </>
+        <Route path="/home" element={<Home />} />
+        {/* <Route path="/" element={<Home />} /> */}
       </Switch>
     </div>
   );

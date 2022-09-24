@@ -11,6 +11,7 @@ import { lazy, Suspense } from "react";
 import { CircularProgress } from "@mui/material";
 import Footer from "./Pages/Footer";
 import { useSelector } from "react-redux";
+import Protected from "./ProtectedRoute/Protected";
 
 function App() {
   const Signup = lazy(() => import("../src/Pages/SignUp"));
@@ -30,15 +31,13 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            {data.access && data.isAuth ? (
+            <Route element={<Protected />}>
               <Route path="/*" element={<Navigation />} />
-            ) : (
-              <>
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/" element={<Signin />} />
-              </>
-            )}
+            </Route>
+
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
+            <Route path="/" element={<Signin />} />
           </Switch>
           <Footer />
         </Router>
