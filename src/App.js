@@ -13,11 +13,11 @@ import Footer from "./Pages/Footer";
 import { useSelector } from "react-redux";
 
 function App() {
-  // const data = useSelector((state) => state.user);
-  // const Signup = lazy(() => import("../src/Pages/SignUp"));
+  const Signup = lazy(() => import("../src/Pages/SignUp"));
   const Navigation = lazy(() => import("../src/Pages/Navigation"));
-  // const Signin = lazy(() => import("../src/Pages/SignIn"));
-
+  const Signin = lazy(() => import("../src/Pages/SignIn"));
+  const data = useSelector((state) => state.user);
+  console.log(data);
   return (
     <Container>
       <Suspense
@@ -30,7 +30,15 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            <Route path="/*" element={<Navigation />} />
+            {data.access && data.isAuth ? (
+              <Route path="/*" element={<Navigation />} />
+            ) : (
+              <>
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/" element={<Signin />} />
+              </>
+            )}
           </Switch>
           <Footer />
         </Router>

@@ -34,19 +34,19 @@ function Header() {
       </Left>
       <Right>
         <LinkContainer>
-          {/* {data.access && data.isAuth ? ( */}
-          <>
-            <Links to="/home">Home</Links>
-            <Links to="/signin" onClick={LogoutFn}>
-              Logout
-            </Links>
-          </>
-          {/* ) : ( */}
-          <>
-            <Links to="/signup">Signup</Links>
-            <Links to="/signin">Signin</Links>
-          </>
-          {/* )} */}
+          {data.access && data.isAuth ? (
+            <>
+              <Links to="/home">Home</Links>
+              <Links to="/signin" onClick={LogoutFn}>
+                Logout
+              </Links>
+            </>
+          ) : (
+            <>
+              <Links to="/signup">Signup</Links>
+              <Links to="/signin">Signin</Links>
+            </>
+          )}
         </LinkContainer>
       </Right>
     </Container>
