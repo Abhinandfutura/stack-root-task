@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Routes as Switch,
   Route,
-  Redirect,
 } from "react-router-dom";
 import Header from "./Components/Header";
 import { lazy, Suspense } from "react";
@@ -14,10 +13,11 @@ import Footer from "./Pages/Footer";
 import { useSelector } from "react-redux";
 
 function App() {
-  const data = useSelector((state) => state.user);
-  const Signup = lazy(() => import("../src/Pages/SignUp"));
-  const Signin = lazy(() => import("../src/Pages/SignIn"));
-  const Home = lazy(() => import("../src/Pages/Home"));
+  // const data = useSelector((state) => state.user);
+  // const Signup = lazy(() => import("../src/Pages/SignUp"));
+  const Navigation = lazy(() => import("../src/Pages/Navigation"));
+  // const Signin = lazy(() => import("../src/Pages/SignIn"));
+
   return (
     <Container>
       <Suspense
@@ -30,19 +30,7 @@ function App() {
         <Router>
           <Header />
           <Switch>
-            {data.acces && data.isAuth ? (
-              <>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route path="/home" element={<Home />} />
-              </>
-            ) : (
-              <>
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/signin" element={<Signin />} />
-              </>
-            )}
+            <Route path="/*" element={<Navigation />} />
           </Switch>
           <Footer />
         </Router>

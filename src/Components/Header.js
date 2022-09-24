@@ -6,15 +6,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../Slices/userSlice";
 import axios from "axios";
 function Header() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const data = useSelector((state) => state.user);
 
-  // console.log("ppppppppp", data.access);
+  console.log("ppppppppp", data.access);
   // console.log("ppppppppp", data.isAuth);
-  const LogoutFn = () => {
-    dispatch(logoutSuccess({}));
+  const LogoutFn = async () => {
+    await axios
+      .post(
+        "https://hiring-stackroots-server.herokuapp.com/auth/signout/user",
+        {
+          Authorization: `Token ${data.access}`,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    // dispatch(logoutSuccess({}));
   };
+
   return (
     <Container>
       <Left>
@@ -22,19 +34,19 @@ function Header() {
       </Left>
       <Right>
         <LinkContainer>
-          {data.access && data.isAuth ? (
-            <>
-              <Links to="/">Home</Links>
-              <Links to="/signin" onClick={LogoutFn}>
-                Logout
-              </Links>
-            </>
-          ) : (
-            <>
-              <Links to="/signup">Signup</Links>
-              <Links to="/signin">Signin</Links>
-            </>
-          )}
+          {/* {data.access && data.isAuth ? ( */}
+          <>
+            <Links to="/home">Home</Links>
+            <Links to="/signin" onClick={LogoutFn}>
+              Logout
+            </Links>
+          </>
+          {/* ) : ( */}
+          <>
+            <Links to="/signup">Signup</Links>
+            <Links to="/signin">Signin</Links>
+          </>
+          {/* )} */}
         </LinkContainer>
       </Right>
     </Container>
