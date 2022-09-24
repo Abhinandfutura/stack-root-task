@@ -1,16 +1,18 @@
-import React from "react";
+import { CircularProgress } from "@mui/material";
+import React, { lazy, Suspense } from "react";
 import { Routes as Switch, Route } from "react-router-dom";
-import Home from "./Home";
 
 function Navigation() {
-  //   const navigate = useNavigate();
+  const Home = lazy(() => import("../Pages/Home"));
 
   return (
     <div>
-      <Switch>
-        <Route path="/home" element={<Home />} />
-        {/* <Route path="/" element={<Home />} /> */}
-      </Switch>
+      <Suspense fallback={<CircularProgress />}>
+        <Switch>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+        </Switch>
+      </Suspense>
     </div>
   );
 }

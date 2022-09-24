@@ -1,46 +1,31 @@
 import React from "react";
 
 import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutSuccess } from "../Slices/userSlice";
-import axios from "axios";
-function Header() {
-  // const dispatch = useDispatch();
 
+function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const data = useSelector((state) => state.user);
 
-  // console.log("ppppppppp", data.access);
-  // console.log("ppppppppp", data.isAuth);
-  // const accesstoken = JSON.parse(data.access);
   const LogoutFn = async () => {
-    // await axios
-    //   .post(
-    //     "https://hiring-stackroots-server.herokuapp.com/auth/signout/user",
-    //     {
-    //       Headers: {
-    //         Authorization: `Token ${data.access}`,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log("iiiiiiiiiii", res.data);
-    //   });
-
     let url =
       "https://hiring-stackroots-server.herokuapp.com/auth/signout/user";
-    fetch(url, {
+    let logoutResponse = await fetch(url, {
       method: "POST",
       headers: {
         "content-type": "application/json",
         Authorization: `Token ${data.access}`,
       },
-    }).then((response) => {
-      let result = response.json();
-      console.log("tttttttttttttt", result);
-    });
-
-    // dispatch(logoutSuccess({}));
+    }).then((response) => response.json());
+    console.log(logoutResponse);
+    if (logoutResponse.isError == false) {
+      dispatch(logoutSuccess({}));
+      alert(logoutResponse.message);
+      navigate("/signin");
+    }
   };
 
   return (

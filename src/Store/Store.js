@@ -5,8 +5,4 @@ export default configureStore({
   reducer: {
     user: userReducer,
   },
-  //   middleware: getDefaultMiddleware({
-  //     serializableCheck: false,
-  //   }),
-  // devTools: false,
 });

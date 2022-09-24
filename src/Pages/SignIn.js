@@ -48,10 +48,11 @@ function SignIn() {
       })
       .then((res) => {
         if (res.data.isError === false) {
+          console.log("displath", res.data.data);
           dispatch(
             loginSuccess({
               ...res.data.data,
-
+              access: res.data.data.user.accessToken,
               isAuth: true,
             })
           );

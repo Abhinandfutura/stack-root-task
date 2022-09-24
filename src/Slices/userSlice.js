@@ -5,7 +5,6 @@ const initialState = localStorage.getItem("user")
   : {
       access: "",
       username: "",
-
       isAuth: false,
     };
 
@@ -14,7 +13,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
-      state.access = action.payload.user.accessToken;
+      state.access = action.payload.access;
 
       state.username = action.payload.user.fullname;
 
